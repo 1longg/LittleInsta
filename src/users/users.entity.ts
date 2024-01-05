@@ -1,7 +1,9 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Post } from 'src/post/post.entity';
-import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import 'reflect-metadata';
+import { Token } from 'src/token/token.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity('users')
 @ObjectType('User')
@@ -12,7 +14,7 @@ export class User {
 
   @Field(() => String)
   @Column({ unique: true })
-  name: string;
+  username: string;
 
   @Field(() => String)
   @Column({ unique: true })
@@ -33,4 +35,8 @@ export class User {
   @Field(() => [Post])
   @OneToMany(() => Post, post => post.user)
   post: Post[]
+
+  @OneToOne(() => Token, token => token.user)
+  @Field(() => Token)
+  token: Token
 }

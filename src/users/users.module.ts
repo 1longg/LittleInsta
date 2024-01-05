@@ -4,11 +4,11 @@ import { User } from './users.entity';
 import { UserService } from './users.service';
 import { UserResolver } from './users.resolver';
 import { Post } from 'src/post/post.entity';
-import { PostService } from 'src/post/post.service';
 import { PostModule } from 'src/post/post.module';
+import { Token } from 'src/token/token.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Post]), forwardRef(() => PostModule)],
+  imports: [TypeOrmModule.forFeature([User, Post, Token]), forwardRef(() => PostModule)],
   providers: [UserService, UserResolver],
   exports: [UserService]
 })

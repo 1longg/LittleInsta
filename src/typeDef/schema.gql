@@ -10,14 +10,28 @@ type Post {
   user: User!
 }
 
+type Token {
+  id: ID!
+  refreshToken: String
+  secretKey: String!
+  user: User!
+}
+
 type User {
   user_id: ID!
-  name: String!
+  username: String!
   email: String!
   password: String!
   imageURL: String!
   bio: String
   post: [Post!]!
+  token: Token!
+}
+
+type LoginReponse {
+  user: User!
+  accessToken: String!
+  refreshToken: String!
 }
 
 type Query {
@@ -29,6 +43,8 @@ type Query {
 type Mutation {
   createUser(user: CreateUserDto!): User!
   createPost(post: CreatePostDto!, user_id: String!): Post!
+  register(registerDto: RegisterDto!): User!
+  login(loginDto: LoginDto!): LoginReponse!
 }
 
 input CreateUserDto {
@@ -42,4 +58,15 @@ input CreateUserDto {
 input CreatePostDto {
   content: String!
   images: [String!]!
+}
+
+input RegisterDto {
+  email: String!
+  username: String!
+  password: String!
+}
+
+input LoginDto {
+  username: String!
+  password: String!
 }
